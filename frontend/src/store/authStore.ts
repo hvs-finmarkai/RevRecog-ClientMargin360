@@ -32,7 +32,8 @@ export const useAuthStore = create<AuthStore>()(
         set({ isLoading: true });
         try {
           const response = await apiClient.post('/auth/login', credentials);
-          const { user, tokens } = response.data.data;
+          const { access, refresh, user } = response.data;
+          const tokens = { access, refresh };
           
           set({
             user,
@@ -41,14 +42,13 @@ export const useAuthStore = create<AuthStore>()(
             isLoading: false,
           });
           
-          // Store tokens separately for axios interceptor
           localStorage.setItem('auth-tokens', JSON.stringify(tokens));
           
-          toast.success(`Welcome back, ${user.name}!`);
+          toast.success(`Welcome back, ${user.first_name || user.email}!`);
         } catch (error: unknown) {
           set({ isLoading: false });
-          const err = error as { response?: { data?: { message?: string } } };
-          const message = err.response?.data?.message || 'Login failed. Please check your credentials.';
+          const err = error as { response?: { data?: { non_field_errors?: string[]; detail?: string } } };
+          const message = err.response?.data?.non_field_errors?.[0] || err.response?.data?.detail || 'Login failed. Please check your credentials.';
           toast.error(message);
           throw error;
         }
