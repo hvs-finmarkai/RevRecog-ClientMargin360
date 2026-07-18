@@ -33,7 +33,7 @@ export const useAuthStore = create<AuthStore>()(
         try {
           const response = await apiClient.post('/auth/login', credentials);
           const { access, refresh, user } = response.data;
-          const tokens = { access, refresh };
+          const tokens = { accessToken: access, refreshToken: refresh, expiresAt: Date.now() + 3600000 };
           
           set({
             user,
