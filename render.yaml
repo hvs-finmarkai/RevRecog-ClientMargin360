@@ -26,7 +26,7 @@ services:
           type: redis
           property: connectionString
       - key: CORS_ALLOWED_ORIGINS
-        value: "https://frontend-dusky-six-16.vercel.app"
+        value: "https://frontend-dusky-six-16.vercel.app,https://frontend-lk71vcuh5-fin-markai.vercel.app"
 
   - type: redis
     name: revrecog-redis
