@@ -1,25 +1,29 @@
-"""Client admin configuration."""
 from django.contrib import admin
-from import_export.admin import ImportExportModelAdmin
-from simple_history.admin import SimpleHistoryAdmin
-
-from .models import Client, ClientContact
+from .models import ClientSegment, Client, ClientContact, ClientAddress
 
 
-class ClientContactInline(admin.TabularInline):
-    model = ClientContact
-    extra = 0
+@admin.register(ClientSegment)
+class ClientSegmentAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    search_fields = ['name']
 
 
 @admin.register(Client)
-class ClientAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    list_display = ["name", "code", "tier", "status", "industry", "account_manager", "created_at"]
-    list_filter = ["tier", "status", "industry"]
-    search_fields = ["name", "code"]
-    inlines = [ClientContactInline]
+class ClientAdmin(admin.ModelAdmin):
+    list_display = ['name', 'segment', 'is_active', 'created_at']
+    list_filter = ['is_active', 'segment']
+    search_fields = ['name']
 
 
 @admin.register(ClientContact)
 class ClientContactAdmin(admin.ModelAdmin):
-    list_display = ["name", "client", "email", "is_primary", "is_billing_contact"]
-    list_filter = ["is_primary", "is_billing_contact"]
+    list_display = ['client', 'name', 'email', 'phone']
+    list_filter = ['client']
+    search_fields = ['name', 'email']
+
+
+@admin.register(ClientAddress)
+class ClientAddressAdmin(admin.ModelAdmin):
+    list_display = ['client', 'city', 'country']
+    list_filter = ['country']
+    search_fields = ['client__name', 'city']

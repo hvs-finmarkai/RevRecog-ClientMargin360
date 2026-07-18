@@ -1,19 +1,28 @@
-"""User admin configuration."""
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from .models import Organization, Role, User, UserActivity
 
-from .models import User
+
+@admin.register(Organization)
+class OrganizationAdmin(admin.ModelAdmin):
+    list_display = ['name', 'created_at']
+    search_fields = ['name']
+
+
+@admin.register(Role)
+class RoleAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    search_fields = ['name']
 
 
 @admin.register(User)
-class UserAdmin(BaseUserAdmin):
-    """Custom admin for User model."""
+class UserAdmin(admin.ModelAdmin):
+    list_display = ['email', 'organization', 'is_active']
+    list_filter = ['is_active', 'organization']
+    search_fields = ['email', 'first_name', 'last_name']
 
-    list_display = ["email", "first_name", "last_name", "role", "is_active", "created_at"]
-    list_filter = ["role", "is_active", "department"]
-    search_fields = ["email", "first_name", "last_name", "department"]
-    ordering = ["-created_at"]
 
-    fieldsets = BaseUserAdmin.fieldsets + (
-        ("Extended Info", {"fields": ("role", "department", "phone", "avatar", "last_login_ip")}),
-    )
+@admin.register(UserActivity)
+class UserActivityAdmin(admin.ModelAdmin):
+    list_display = ['user', 'activity_type', 'created_at']
+    list_filter = ['activity_type']
+    search_fields = ['user__email']

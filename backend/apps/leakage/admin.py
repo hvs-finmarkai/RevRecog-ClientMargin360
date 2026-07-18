@@ -1,17 +1,30 @@
-"""Leakage admin configuration."""
 from django.contrib import admin
-from simple_history.admin import SimpleHistoryAdmin
+from .models import LeakageDetection, LeakageRule, LeakageAlert, LeakageResolution
 
-from .models import LeakageAlert, LeakageDetectionRun
+
+@admin.register(LeakageDetection)
+class LeakageDetectionAdmin(admin.ModelAdmin):
+    list_display = ['contract', 'detection_type', 'amount', 'detected_at']
+    list_filter = ['detection_type']
+    search_fields = ['contract__name']
+
+
+@admin.register(LeakageRule)
+class LeakageRuleAdmin(admin.ModelAdmin):
+    list_display = ['name', 'rule_type', 'is_active']
+    list_filter = ['rule_type', 'is_active']
+    search_fields = ['name']
 
 
 @admin.register(LeakageAlert)
-class LeakageAlertAdmin(SimpleHistoryAdmin):
-    list_display = ["title", "alert_type", "severity", "status", "client", "estimated_leakage_amount", "created_at"]
-    list_filter = ["alert_type", "severity", "status"]
-    search_fields = ["title", "client__name", "contract__contract_number"]
+class LeakageAlertAdmin(admin.ModelAdmin):
+    list_display = ['detection', 'severity', 'status', 'created_at']
+    list_filter = ['severity', 'status']
+    search_fields = ['detection__contract__name']
 
 
-@admin.register(LeakageDetectionRun)
-class LeakageDetectionRunAdmin(admin.ModelAdmin):
-    list_display = ["run_date", "contracts_analyzed", "alerts_generated", "total_leakage_detected", "duration_seconds"]
+@admin.register(LeakageResolution)
+class LeakageResolutionAdmin(admin.ModelAdmin):
+    list_display = ['alert', 'resolved_by', 'resolution_type', 'resolved_at']
+    list_filter = ['resolution_type']
+    search_fields = ['alert__detection__contract__name']

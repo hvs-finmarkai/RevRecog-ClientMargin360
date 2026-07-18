@@ -1,9 +1,8 @@
-"""Contract admin configuration."""
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from simple_history.admin import SimpleHistoryAdmin
 
-from .models import Contract, PerformanceObligation, ContractModification
+from .models import Contract, PerformanceObligation, ContractAmendment
 
 
 class PerformanceObligationInline(admin.TabularInline):
@@ -14,7 +13,7 @@ class PerformanceObligationInline(admin.TabularInline):
 @admin.register(Contract)
 class ContractAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
     list_display = ["contract_number", "title", "client", "status", "total_value", "start_date", "end_date"]
-    list_filter = ["status", "contract_type", "client"]
+    list_filter = ["status", "billing_model", "client"]
     search_fields = ["contract_number", "title", "client__name"]
     inlines = [PerformanceObligationInline]
     date_hierarchy = "start_date"
@@ -22,11 +21,11 @@ class ContractAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
 
 @admin.register(PerformanceObligation)
 class PerformanceObligationAdmin(admin.ModelAdmin):
-    list_display = ["contract", "name", "fulfillment_type", "progress_percentage", "allocated_price"]
-    list_filter = ["fulfillment_type", "is_distinct"]
+    list_display = ["contract", "description", "recognition_pattern", "allocation_amount", "status"]
+    list_filter = ["recognition_pattern", "status"]
 
 
-@admin.register(ContractModification)
-class ContractModificationAdmin(SimpleHistoryAdmin):
-    list_display = ["contract", "modification_type", "effective_date", "value_change"]
-    list_filter = ["modification_type"]
+@admin.register(ContractAmendment)
+class ContractAmendmentAdmin(SimpleHistoryAdmin):
+    list_display = ["contract", "amendment_number", "effective_date", "value_change"]
+    list_filter = ["effective_date"]

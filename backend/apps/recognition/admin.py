@@ -1,25 +1,30 @@
-"""Revenue recognition admin configuration."""
 from django.contrib import admin
-from simple_history.admin import SimpleHistoryAdmin
-
-from .models import RevenueRecognitionEvent, DeferredRevenue, RecognitionRule
+from .models import RevenueSchedule, RevenueEntry, RecognitionRule, ASC606Compliance
 
 
-@admin.register(RevenueRecognitionEvent)
-class RevenueRecognitionEventAdmin(SimpleHistoryAdmin):
-    list_display = ["contract", "obligation", "period", "amount", "method", "status", "recognition_date"]
-    list_filter = ["status", "method", "period"]
-    search_fields = ["contract__contract_number"]
-    date_hierarchy = "recognition_date"
+@admin.register(RevenueSchedule)
+class RevenueScheduleAdmin(admin.ModelAdmin):
+    list_display = ['contract', 'start_date', 'end_date', 'total_amount']
+    list_filter = ['start_date']
+    search_fields = ['contract__name']
 
 
-@admin.register(DeferredRevenue)
-class DeferredRevenueAdmin(admin.ModelAdmin):
-    list_display = ["contract", "obligation", "period", "opening_balance", "recognized", "closing_balance"]
-    list_filter = ["period"]
+@admin.register(RevenueEntry)
+class RevenueEntryAdmin(admin.ModelAdmin):
+    list_display = ['schedule', 'period', 'amount', 'status']
+    list_filter = ['status']
+    search_fields = ['schedule__contract__name']
 
 
 @admin.register(RecognitionRule)
 class RecognitionRuleAdmin(admin.ModelAdmin):
-    list_display = ["name", "trigger_type", "is_active", "requires_approval", "auto_recognize_threshold"]
-    list_filter = ["trigger_type", "is_active"]
+    list_display = ['name', 'rule_type', 'is_active']
+    list_filter = ['rule_type', 'is_active']
+    search_fields = ['name']
+
+
+@admin.register(ASC606Compliance)
+class ASC606ComplianceAdmin(admin.ModelAdmin):
+    list_display = ['contract', 'step', 'status', 'assessed_at']
+    list_filter = ['step', 'status']
+    search_fields = ['contract__name']

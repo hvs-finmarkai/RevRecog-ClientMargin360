@@ -1,22 +1,37 @@
-"""AI Engine admin configuration."""
 from django.contrib import admin
-from .models import AIProcessingJob, AIModel, EmbeddingDocument
-
-
-@admin.register(AIProcessingJob)
-class AIProcessingJobAdmin(admin.ModelAdmin):
-    list_display = ["job_type", "status", "confidence_score", "processing_time_seconds", "created_at"]
-    list_filter = ["job_type", "status"]
-    readonly_fields = ["input_data", "output_data"]
+from .models import AIModel, AIRecommendation, AIPrediction, PromptLog, ContractParsing
 
 
 @admin.register(AIModel)
 class AIModelAdmin(admin.ModelAdmin):
-    list_display = ["name", "model_type", "version", "provider", "is_active", "accuracy_score"]
-    list_filter = ["model_type", "provider", "is_active"]
+    list_display = ['name', 'model_type', 'version', 'is_active']
+    list_filter = ['model_type', 'is_active']
+    search_fields = ['name']
 
 
-@admin.register(EmbeddingDocument)
-class EmbeddingDocumentAdmin(admin.ModelAdmin):
-    list_display = ["title", "source_type", "source_id", "chunk_count", "created_at"]
-    list_filter = ["source_type"]
+@admin.register(AIRecommendation)
+class AIRecommendationAdmin(admin.ModelAdmin):
+    list_display = ['model', 'recommendation_type', 'confidence', 'created_at']
+    list_filter = ['recommendation_type']
+    search_fields = ['model__name']
+
+
+@admin.register(AIPrediction)
+class AIPredictionAdmin(admin.ModelAdmin):
+    list_display = ['model', 'prediction_type', 'confidence', 'created_at']
+    list_filter = ['prediction_type']
+    search_fields = ['model__name']
+
+
+@admin.register(PromptLog)
+class PromptLogAdmin(admin.ModelAdmin):
+    list_display = ['model', 'user', 'prompt_type', 'created_at']
+    list_filter = ['prompt_type']
+    search_fields = ['user__email']
+
+
+@admin.register(ContractParsing)
+class ContractParsingAdmin(admin.ModelAdmin):
+    list_display = ['contract', 'status', 'parsed_at']
+    list_filter = ['status']
+    search_fields = ['contract__name']
