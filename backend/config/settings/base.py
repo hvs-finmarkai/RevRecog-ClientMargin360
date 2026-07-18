@@ -36,9 +36,7 @@ THIRD_PARTY_APPS = [
     "django_celery_beat",
     "simple_history",
     "import_export",
-    "storages",
     "drf_spectacular",
-    "django_extensions",
 ]
 
 LOCAL_APPS = [
