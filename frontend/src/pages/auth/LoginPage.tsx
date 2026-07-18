@@ -108,7 +108,7 @@ export default function LoginPage() {
 
       <div className="mt-6 p-4 bg-navy-50 rounded-lg border border-navy-100">
         <p className="text-xs font-medium text-navy-600 mb-1">Demo Credentials</p>
-        <p className="text-xs text-navy-500">Email: admin@finmark.ai | Password: demo123</p>
+        <p className="text-xs text-navy-500">Email: admin@finmark.ai | Password: Finmark@2026</p>
       </div>
     </div>
   );
