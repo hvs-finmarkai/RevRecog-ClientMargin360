@@ -1,4 +1,5 @@
 import apiClient from '../../lib/axios';
+import { PaginatedResponse } from './contracts';
 
 export interface Invoice {
   id: string;
@@ -36,14 +37,6 @@ export interface BulkGeneratePayload {
   contractIds: string[];
   periodStart: string;
   periodEnd: string;
-}
-
-export interface PaginatedResponse<T> {
-  data: T[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
 }
 
 export const getInvoices = async (filters?: InvoiceFilters): Promise<PaginatedResponse<Invoice>> => {

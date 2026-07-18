@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { AlertTriangle, Search, Eye } from 'lucide-react';
 import { useAppStore } from '@/store/appStore';
-import { formatCurrency, formatDate, formatStatus, getStatusColor, cn } from '@/lib/utils';
+import { formatCurrency, formatDate, formatStatus, getStatusColor } from '@/lib/utils';
 
 export default function LeakageDetectionPage() {
   const { setPageTitle } = useAppStore();
