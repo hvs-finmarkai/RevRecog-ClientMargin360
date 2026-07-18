@@ -3,7 +3,7 @@ import { Settings, User, Bell, Shield, Database, Palette } from 'lucide-react';
 import { useAppStore } from '@/store/appStore';
 
 export default function SettingsPage() {
-  const { setPageTitle, theme, setTheme } = useAppStore();
+  const { setPageTitle, theme, toggleTheme } = useAppStore();
 
   useEffect(() => {
     setPageTitle('Settings');
@@ -53,12 +53,11 @@ export default function SettingsPage() {
                 <span className="text-sm text-navy-600">Theme</span>
                 <select
                   value={theme}
-                  onChange={(e) => setTheme(e.target.value as 'light' | 'dark' | 'system')}
+                  onChange={() => toggleTheme()}
                   className="input-field w-auto text-xs py-1"
                 >
                   <option value="light">Light</option>
                   <option value="dark">Dark</option>
-                  <option value="system">System</option>
                 </select>
               </div>
               <div className="flex items-center justify-between">

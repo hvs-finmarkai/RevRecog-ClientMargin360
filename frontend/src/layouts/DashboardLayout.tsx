@@ -19,10 +19,12 @@ import {
   LogOut,
   User,
   Activity,
+  ShieldCheck,
 } from 'lucide-react';
 import { useAppStore } from '@/store/appStore';
 import { useAuthStore } from '@/store/authStore';
 import { cn, getInitials } from '@/lib/utils';
+import ThemeToggle from '@/components/ThemeToggle';
 
 interface NavItem {
   label: string;
@@ -43,16 +45,18 @@ const navigationItems: NavItem[] = [
   { label: 'Reports & Analytics', href: '/dashboard/reports', icon: BarChart3 },
   { label: 'Alerts', href: '/dashboard/alerts', icon: Bell },
   { label: 'Settings', href: '/dashboard/settings', icon: Settings },
+  { label: 'Admin', href: '/dashboard/admin', icon: ShieldCheck },
 ];
 
 export default function DashboardLayout() {
   const location = useLocation();
-  const { 
-    sidebarCollapsed, 
-    toggleSidebar, 
-    currentPageTitle, 
-    systemStatus, 
-    unreadAlerts 
+  const {
+    sidebarCollapsed,
+    toggleSidebar,
+    currentPageTitle,
+    systemStatus,
+    unreadAlerts,
+    theme,
   } = useAppStore();
   const { user, logout } = useAuthStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -61,21 +65,21 @@ export default function DashboardLayout() {
     switch (systemStatus) {
       case 'operational':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-success-50 text-success-700">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-400">
             <span className="w-1.5 h-1.5 rounded-full bg-success-500 animate-pulse-slow" />
             All Systems Operational
           </span>
         );
       case 'degraded':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-warning-50 text-warning-700">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-warning-50 text-warning-700 dark:bg-warning-500/10 dark:text-warning-400">
             <span className="w-1.5 h-1.5 rounded-full bg-warning-500" />
             Degraded Performance
           </span>
         );
       case 'maintenance':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-primary-50 text-primary-700">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-primary-50 text-primary-700 dark:bg-primary-500/10 dark:text-primary-400">
             <span className="w-1.5 h-1.5 rounded-full bg-primary-500" />
             Under Maintenance
           </span>
@@ -84,8 +88,7 @@ export default function DashboardLayout() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-background">
-      {/* Mobile menu overlay */}
+    <div className={cn('flex h-screen overflow-hidden bg-background dark:bg-[#0F172A]', theme === 'dark' ? 'dark' : '')}>
       {mobileMenuOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden"
@@ -93,15 +96,13 @@ export default function DashboardLayout() {
         />
       )}
 
-      {/* Sidebar */}
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-50 flex flex-col bg-navy-700 shadow-sidebar transition-all duration-300 ease-in-out',
+          'fixed inset-y-0 left-0 z-50 flex flex-col bg-[#1E293B] shadow-sidebar transition-all duration-300 ease-in-out',
           sidebarCollapsed ? 'w-[72px]' : 'w-[280px]',
           mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         )}
       >
-        {/* Logo */}
         <div className="flex items-center justify-between h-16 px-4 border-b border-white/10">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
@@ -119,7 +120,6 @@ export default function DashboardLayout() {
               <Activity className="w-5 h-5 text-white" />
             </div>
           )}
-          {/* Close button for mobile */}
           <button
             onClick={() => setMobileMenuOpen(false)}
             className="lg:hidden text-navy-300 hover:text-white"
@@ -129,13 +129,12 @@ export default function DashboardLayout() {
           </button>
         </div>
 
-        {/* Navigation */}
         <nav className="flex-1 overflow-y-auto scrollbar-thin py-4 px-3 space-y-1">
           {navigationItems.map((item) => {
-            const isActive = location.pathname === item.href || 
+            const isActive = location.pathname === item.href ||
               (item.href !== '/dashboard' && location.pathname.startsWith(item.href));
             const Icon = item.icon;
-            
+
             return (
               <NavLink
                 key={item.href}
@@ -161,7 +160,6 @@ export default function DashboardLayout() {
           })}
         </nav>
 
-        {/* Collapse toggle */}
         <div className="hidden lg:block border-t border-white/10 p-3">
           <button
             onClick={toggleSidebar}
@@ -179,7 +177,6 @@ export default function DashboardLayout() {
           </button>
         </div>
 
-        {/* User section */}
         {!sidebarCollapsed && (
           <div className="border-t border-white/10 p-3">
             <div className="flex items-center gap-3 px-2 py-2">
@@ -219,41 +216,36 @@ export default function DashboardLayout() {
         )}
       </aside>
 
-      {/* Main content area */}
       <div
         className={cn(
           'flex-1 flex flex-col min-h-screen transition-all duration-300',
           sidebarCollapsed ? 'lg:ml-[72px]' : 'lg:ml-[280px]'
         )}
       >
-        {/* Top Header */}
-        <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-4 lg:px-6 bg-white border-b border-navy-100">
-          {/* Left side */}
+        <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-4 lg:px-6 bg-white dark:bg-[#1E293B] border-b border-navy-100 dark:border-[#334155]">
           <div className="flex items-center gap-4">
-            {/* Mobile menu toggle */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden text-navy-600 hover:text-navy-900"
+              className="lg:hidden text-navy-600 hover:text-navy-900 dark:text-navy-300 dark:hover:text-white"
               aria-label="Open menu"
             >
               <Menu className="w-6 h-6" />
             </button>
-            
-            <h2 className="text-lg font-semibold text-navy-900">
+
+            <h2 className="text-lg font-semibold text-navy-900 dark:text-[#F1F5F9]">
               {currentPageTitle}
             </h2>
           </div>
 
-          {/* Right side */}
           <div className="flex items-center gap-4">
-            {/* System status badge */}
             <div className="hidden md:block">
               {getStatusBadge()}
             </div>
 
-            {/* Notifications */}
+            <ThemeToggle />
+
             <button
-              className="relative p-2 text-navy-500 hover:text-navy-700 hover:bg-navy-50 rounded-lg transition-colors"
+              className="relative p-2 text-navy-500 hover:text-navy-700 hover:bg-navy-50 dark:text-navy-300 dark:hover:text-white dark:hover:bg-white/10 rounded-lg transition-colors"
               aria-label="Notifications"
             >
               <Bell className="w-5 h-5" />
@@ -262,9 +254,8 @@ export default function DashboardLayout() {
               )}
             </button>
 
-            {/* User avatar */}
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-500/20 flex items-center justify-center">
                 {user?.avatar ? (
                   <img
                     src={user.avatar}
@@ -272,17 +263,16 @@ export default function DashboardLayout() {
                     className="w-8 h-8 rounded-full object-cover"
                   />
                 ) : (
-                  <User className="w-4 h-4 text-primary-600" />
+                  <User className="w-4 h-4 text-primary-600 dark:text-primary-400" />
                 )}
               </div>
-              <span className="hidden md:block text-sm font-medium text-navy-700">
+              <span className="hidden md:block text-sm font-medium text-navy-700 dark:text-[#F1F5F9]">
                 {user?.name || 'User'}
               </span>
             </div>
           </div>
         </header>
 
-        {/* Page content */}
         <main className="flex-1 overflow-y-auto p-4 lg:p-6">
           <Outlet />
         </main>

@@ -4,7 +4,6 @@ import DashboardLayout from '@/layouts/DashboardLayout';
 import AuthLayout from '@/layouts/AuthLayout';
 import { useAuthStore } from '@/store/authStore';
 
-// Lazy-loaded page components
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
 const OverviewPage = lazy(() => import('@/pages/dashboard/OverviewPage'));
 const ContractsPage = lazy(() => import('@/pages/dashboard/ContractsPage'));
@@ -17,8 +16,8 @@ const CollectionsPage = lazy(() => import('@/pages/dashboard/CollectionsPage'));
 const ReportsPage = lazy(() => import('@/pages/dashboard/ReportsPage'));
 const AlertsPage = lazy(() => import('@/pages/dashboard/AlertsPage'));
 const SettingsPage = lazy(() => import('@/pages/dashboard/SettingsPage'));
+const AdminPage = lazy(() => import('@/pages/dashboard/AdminPage'));
 
-// Loading fallback
 function PageLoader() {
   return (
     <div className="flex items-center justify-center h-64">
@@ -30,14 +29,13 @@ function PageLoader() {
   );
 }
 
-// Protected route wrapper
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuthStore();
-  
+
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-  
+
   return <>{children}</>;
 }
 
@@ -45,12 +43,10 @@ export default function AppRoutes() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
-        {/* Auth routes */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
         </Route>
 
-        {/* Dashboard routes (protected) */}
         <Route
           element={
             <ProtectedRoute>
@@ -69,12 +65,10 @@ export default function AppRoutes() {
           <Route path="/dashboard/reports" element={<ReportsPage />} />
           <Route path="/dashboard/alerts" element={<AlertsPage />} />
           <Route path="/dashboard/settings" element={<SettingsPage />} />
+          <Route path="/dashboard/admin" element={<AdminPage />} />
         </Route>
 
-        {/* Redirect root to dashboard */}
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
-
-        {/* 404 - Catch all */}
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </Suspense>
