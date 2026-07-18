@@ -1,11 +1,15 @@
 # RevRecog AI + ClientMargin360
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/hvs-finmarkai/RevRecog-ClientMargin360)
+
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![Django](https://img.shields.io/badge/Django-4.2-green.svg)](https://djangoproject.com)
 [![React](https://img.shields.io/badge/React-18.2-61dafb.svg)](https://reactjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-3178c6.svg)](https://typescriptlang.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF.svg)](https://github.com/features/actions)
+
+**🚀 Live Demo:** https://frontend-dusky-six-16.vercel.app
 
 **RevRecog AI** is an intelligent revenue recognition engine that automates ASC 606 / IFRS 15 compliance for B2B service companies. **ClientMargin360** provides real-time client profitability analytics, margin tracking, and leakage detection powered by AI.
 
