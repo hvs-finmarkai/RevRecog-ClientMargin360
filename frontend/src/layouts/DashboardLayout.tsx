@@ -1,279 +1,177 @@
 import { useState } from 'react';
-import { Outlet, NavLink, useLocation } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   FileText,
-  Receipt,
-  Clock,
-  TrendingUp,
-  PieChart,
-  AlertTriangle,
-  Wallet,
   BarChart3,
+  Receipt,
+  AlertTriangle,
+  TrendingUp,
   Bell,
-  Settings,
-  ChevronLeft,
-  ChevronRight,
-  Menu,
-  X,
-  LogOut,
-  User,
-  Activity,
   ShieldCheck,
+  LogOut,
+  Sun,
+  Moon,
 } from 'lucide-react';
-import { useAppStore } from '@/store/appStore';
 import { useAuthStore } from '@/store/authStore';
-import { cn, getInitials } from '@/lib/utils';
-import ThemeToggle from '@/components/ThemeToggle';
+import { useAppStore } from '@/store/appStore';
 
-interface NavItem {
-  label: string;
-  href: string;
-  icon: React.ComponentType<{ className?: string }>;
-  badge?: number;
-}
-
-const navigationItems: NavItem[] = [
-  { label: 'Overview', href: '/dashboard', icon: LayoutDashboard },
-  { label: 'Contracts', href: '/dashboard/contracts', icon: FileText },
-  { label: 'Billing & Invoices', href: '/dashboard/invoices', icon: Receipt },
-  { label: 'Billables', href: '/dashboard/billables', icon: Clock },
-  { label: 'Revenue Recognition', href: '/dashboard/revenue-recognition', icon: TrendingUp },
-  { label: 'Client Profitability', href: '/dashboard/client-profitability', icon: PieChart },
-  { label: 'Leakage Detection', href: '/dashboard/leakage', icon: AlertTriangle },
-  { label: 'Collections', href: '/dashboard/collections', icon: Wallet },
-  { label: 'Reports & Analytics', href: '/dashboard/reports', icon: BarChart3 },
-  { label: 'Alerts', href: '/dashboard/alerts', icon: Bell },
-  { label: 'Settings', href: '/dashboard/settings', icon: Settings },
-  { label: 'Admin', href: '/dashboard/admin', icon: ShieldCheck },
+const navItems = [
+  { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/dashboard/contracts', label: 'Contracts', icon: FileText },
+  { to: '/dashboard/revenue-recognition', label: 'Revenue', icon: BarChart3 },
+  { to: '/dashboard/invoices', label: 'Invoices', icon: Receipt },
+  { to: '/dashboard/leakage', label: 'Leakage', icon: AlertTriangle },
+  { to: '/dashboard/client-profitability', label: 'Profitability', icon: TrendingUp },
+  { to: '/dashboard/alerts', label: 'Alerts', icon: Bell },
+  { to: '/dashboard/admin', label: 'Admin', icon: ShieldCheck },
 ];
 
 export default function DashboardLayout() {
-  const location = useLocation();
-  const {
-    sidebarCollapsed,
-    toggleSidebar,
-    currentPageTitle,
-    systemStatus,
-    unreadAlerts,
-    theme,
-  } = useAppStore();
+  const navigate = useNavigate();
   const { user, logout } = useAuthStore();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { currentPageTitle, theme, toggleTheme } = useAppStore();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const getStatusBadge = () => {
-    switch (systemStatus) {
-      case 'operational':
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-success-500 animate-pulse-slow" />
-            All Systems Operational
-          </span>
-        );
-      case 'degraded':
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-warning-50 text-warning-700 dark:bg-warning-500/10 dark:text-warning-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-warning-500" />
-            Degraded Performance
-          </span>
-        );
-      case 'maintenance':
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-primary-50 text-primary-700 dark:bg-primary-500/10 dark:text-primary-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary-500" />
-            Under Maintenance
-          </span>
-        );
-    }
+  const userInitials = user
+    ? `${(user as unknown as { first_name?: string }).first_name?.[0] || user.name?.[0] || ''}${(user as unknown as { last_name?: string }).last_name?.[0] || user.name?.split(' ')[1]?.[0] || ''}`.toUpperCase()
+    : 'DA';
+
+  const userName = user
+    ? `${(user as unknown as { first_name?: string }).first_name || ''} ${(user as unknown as { last_name?: string }).last_name || ''}`.trim() || user.name || 'Demo Admin'
+    : 'Demo Admin';
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
   };
 
   return (
-    <div className={cn('flex h-screen overflow-hidden bg-background dark:bg-[#0F172A]', theme === 'dark' ? 'dark' : '')}>
-      {mobileMenuOpen && (
+    <div className="flex h-screen overflow-hidden">
+      {mobileOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={() => setMobileMenuOpen(false)}
+          className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+          onClick={() => setMobileOpen(false)}
         />
       )}
 
       <aside
-        className={cn(
-          'fixed inset-y-0 left-0 z-50 flex flex-col bg-[#1E293B] shadow-sidebar transition-all duration-300 ease-in-out',
-          sidebarCollapsed ? 'w-[72px]' : 'w-[280px]',
-          mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-        )}
+        className={`fixed lg:static inset-y-0 left-0 z-50 flex flex-col transition-transform duration-300 lg:translate-x-0 ${
+          mobileOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+        style={{ width: 260, backgroundColor: '#1F3864' }}
       >
-        <div className="flex items-center justify-between h-16 px-4 border-b border-white/10">
-          {!sidebarCollapsed && (
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-primary-500 flex items-center justify-center">
-                <Activity className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h1 className="text-white font-bold text-sm leading-tight">Finmark.ai</h1>
-                <p className="text-navy-300 text-[10px] leading-tight">RevRecog + ClientMargin360</p>
-              </div>
-            </div>
-          )}
-          {sidebarCollapsed && (
-            <div className="w-8 h-8 rounded-lg bg-primary-500 flex items-center justify-center mx-auto">
-              <Activity className="w-5 h-5 text-white" />
-            </div>
-          )}
-          <button
-            onClick={() => setMobileMenuOpen(false)}
-            className="lg:hidden text-navy-300 hover:text-white"
-            aria-label="Close menu"
+        <div className="flex items-center gap-3 px-5 py-5">
+          <div
+            className="flex items-center justify-center rounded-lg text-white font-bold text-lg"
+            style={{ width: 40, height: 40, backgroundColor: '#3B82F6' }}
           >
-            <X className="w-5 h-5" />
-          </button>
+            R
+          </div>
+          <div>
+            <div className="text-white font-bold text-base">RevRecog AI</div>
+            <div className="text-gray-400 text-xs">by Finmark.ai</div>
+          </div>
         </div>
 
-        <nav className="flex-1 overflow-y-auto scrollbar-thin py-4 px-3 space-y-1">
-          {navigationItems.map((item) => {
-            const isActive = location.pathname === item.href ||
-              (item.href !== '/dashboard' && location.pathname.startsWith(item.href));
-            const Icon = item.icon;
-
-            return (
-              <NavLink
-                key={item.href}
-                to={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={cn(
-                  isActive ? 'sidebar-link-active' : 'sidebar-link-inactive',
-                  sidebarCollapsed && 'justify-center px-2'
-                )}
-                title={sidebarCollapsed ? item.label : undefined}
-              >
-                <Icon className="w-5 h-5 flex-shrink-0" />
-                {!sidebarCollapsed && (
-                  <span className="truncate">{item.label}</span>
-                )}
-                {!sidebarCollapsed && item.label === 'Alerts' && unreadAlerts > 0 && (
-                  <span className="ml-auto inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold text-white bg-danger-500 rounded-full">
-                    {unreadAlerts > 9 ? '9+' : unreadAlerts}
-                  </span>
-                )}
-              </NavLink>
-            );
-          })}
+        <nav className="flex-1 px-3 py-2 space-y-1 overflow-y-auto">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.to === '/dashboard'}
+              onClick={() => setMobileOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
+                  isActive
+                    ? 'text-white border-l-[3px] border-[#3B82F6]'
+                    : 'text-white border-l-[3px] border-transparent'
+                }`
+              }
+              style={({ isActive }) => ({
+                backgroundColor: isActive ? 'rgba(255,255,255,0.1)' : undefined,
+              })}
+              onMouseEnter={(e) => {
+                if (!e.currentTarget.classList.contains('active')) {
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                const isActive = e.currentTarget.getAttribute('aria-current') === 'page';
+                if (!isActive) {
+                  e.currentTarget.style.backgroundColor = '';
+                }
+              }}
+            >
+              <item.icon size={18} />
+              <span>{item.label}</span>
+            </NavLink>
+          ))}
         </nav>
 
-        <div className="hidden lg:block border-t border-white/10 p-3">
-          <button
-            onClick={toggleSidebar}
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 text-sm text-navy-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-            aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          >
-            {sidebarCollapsed ? (
-              <ChevronRight className="w-4 h-4" />
-            ) : (
-              <>
-                <ChevronLeft className="w-4 h-4" />
-                <span>Collapse</span>
-              </>
-            )}
-          </button>
-        </div>
-
-        {!sidebarCollapsed && (
-          <div className="border-t border-white/10 p-3">
-            <div className="flex items-center gap-3 px-2 py-2">
-              <div className="w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center text-white text-xs font-semibold">
-                {user ? getInitials(user.name) : 'U'}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white truncate">
-                  {user?.name || 'User'}
-                </p>
-                <p className="text-xs text-navy-400 truncate">
-                  {user?.role ? user.role.replace('_', ' ') : 'Analyst'}
-                </p>
-              </div>
-              <button
-                onClick={logout}
-                className="text-navy-400 hover:text-white transition-colors"
-                aria-label="Logout"
-                title="Logout"
-              >
-                <LogOut className="w-4 h-4" />
-              </button>
+        <div className="px-4 py-4 border-t border-white/10">
+          <div className="flex items-center gap-3">
+            <div
+              className="flex items-center justify-center rounded-full text-white text-sm font-semibold"
+              style={{ width: 36, height: 36, backgroundColor: '#3B82F6' }}
+            >
+              {userInitials}
             </div>
-          </div>
-        )}
-        {sidebarCollapsed && (
-          <div className="border-t border-white/10 p-3 flex justify-center">
+            <div className="flex-1 min-w-0">
+              <div className="text-white text-sm font-medium truncate">{userName}</div>
+              <div className="text-gray-400 text-xs truncate">Finance Team</div>
+            </div>
             <button
-              onClick={logout}
-              className="text-navy-400 hover:text-white transition-colors p-2"
-              aria-label="Logout"
+              onClick={handleLogout}
+              className="text-gray-400 hover:text-white transition-colors"
               title="Logout"
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut size={18} />
             </button>
           </div>
-        )}
+        </div>
       </aside>
 
-      <div
-        className={cn(
-          'flex-1 flex flex-col min-h-screen transition-all duration-300',
-          sidebarCollapsed ? 'lg:ml-[72px]' : 'lg:ml-[280px]'
-        )}
-      >
-        <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-4 lg:px-6 bg-white dark:bg-[#1E293B] border-b border-navy-100 dark:border-[#334155]">
-          <div className="flex items-center gap-4">
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <header
+          className="flex items-center justify-between px-6 py-3 shrink-0"
+          style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #E2E8F0' }}
+        >
+          <div className="flex items-center gap-3">
             <button
-              onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden text-navy-600 hover:text-navy-900 dark:text-navy-300 dark:hover:text-white"
-              aria-label="Open menu"
+              className="lg:hidden text-gray-600"
+              onClick={() => setMobileOpen(true)}
             >
-              <Menu className="w-6 h-6" />
+              <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M3 12h18M3 6h18M3 18h18" />
+              </svg>
             </button>
-
-            <h2 className="text-lg font-semibold text-navy-900 dark:text-[#F1F5F9]">
-              {currentPageTitle}
-            </h2>
+            <h1 className="text-lg font-semibold text-gray-900 dark:text-white">{currentPageTitle}</h1>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="hidden md:block">
-              {getStatusBadge()}
-            </div>
+            <span className="hidden md:inline text-xs text-gray-500">
+              RevRecog AI + ClientMargin360 • Finmark.ai
+            </span>
 
-            <ThemeToggle />
+            <div
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium"
+              style={{ backgroundColor: '#ECFDF5', border: '1px solid #A7F3D0' }}
+            >
+              <span className="status-dot" style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#10B981' }} />
+              <span style={{ color: '#065F46' }}>System Online</span>
+            </div>
 
             <button
-              className="relative p-2 text-navy-500 hover:text-navy-700 hover:bg-navy-50 dark:text-navy-300 dark:hover:text-white dark:hover:bg-white/10 rounded-lg transition-colors"
-              aria-label="Notifications"
+              onClick={toggleTheme}
+              className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
-              <Bell className="w-5 h-5" />
-              {unreadAlerts > 0 && (
-                <span className="absolute top-1 right-1 w-2 h-2 bg-danger-500 rounded-full" />
-              )}
+              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
             </button>
-
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-500/20 flex items-center justify-center">
-                {user?.avatar ? (
-                  <img
-                    src={user.avatar}
-                    alt={user.name}
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
-                ) : (
-                  <User className="w-4 h-4 text-primary-600 dark:text-primary-400" />
-                )}
-              </div>
-              <span className="hidden md:block text-sm font-medium text-navy-700 dark:text-[#F1F5F9]">
-                {user?.name || 'User'}
-              </span>
-            </div>
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-4 lg:p-6">
+        <main className="flex-1 overflow-y-auto p-6" style={{ backgroundColor: 'var(--bg)' }}>
           <Outlet />
         </main>
       </div>

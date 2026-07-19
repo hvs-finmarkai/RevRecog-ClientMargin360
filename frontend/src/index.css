@@ -2,139 +2,278 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  * {
-    @apply border-gray-200 dark:border-[#334155];
-  }
+:root {
+  --primary: #3B82F6;
+  --primary-hover: #2563EB;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --sidebar-bg: #1F3864;
+  --bg: #F8FAFC;
+  --card-bg: #FFFFFF;
+  --text: #1E293B;
+  --text-secondary: #64748B;
+  --gray-100: #F1F5F9;
+  --gray-200: #E2E8F0;
+  --gray-500: #64748B;
+  --border: #E2E8F0;
+  --input-bg: #FFFFFF;
+  --input-border: #D1D5DB;
+}
 
-  :root {
-    --border: 226 13% 90%;
-    --sidebar-width: 280px;
-    --sidebar-collapsed-width: 72px;
-    --header-height: 64px;
-  }
+.dark {
+  --bg: #0F172A;
+  --card-bg: #1E293B;
+  --text: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --gray-100: #1E293B;
+  --gray-200: #334155;
+  --gray-500: #94A3B8;
+  --border: #334155;
+  --input-bg: #1E293B;
+  --input-border: #475569;
+}
 
-  body {
-    @apply bg-background dark:bg-[#0F172A] text-navy-900 dark:text-[#F1F5F9] font-sans;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight;
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
   }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.5);
+  }
+}
+
+.status-dot {
+  animation: pulse 2s ease-in-out infinite;
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-primary-500 border border-transparent rounded-lg shadow-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    background-color: var(--primary);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    height: 44px;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-navy-700 dark:text-[#F1F5F9] bg-white dark:bg-[#1E293B] border border-navy-200 dark:border-[#334155] rounded-lg shadow-sm hover:bg-navy-50 dark:hover:bg-[#334155] focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text);
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    height: 44px;
   }
 
-  .btn-danger {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-danger-500 border border-transparent rounded-lg shadow-sm hover:bg-danger-600 focus:outline-none focus:ring-2 focus:ring-danger-500 focus:ring-offset-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
-  }
-
-  .btn-success {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-success-500 border border-transparent rounded-lg shadow-sm hover:bg-success-600 focus:outline-none focus:ring-2 focus:ring-success-500 focus:ring-offset-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
-  }
-
-  .card {
-    @apply bg-white dark:bg-[#1E293B] rounded-xl border border-navy-100 dark:border-[#334155] shadow-card p-6;
-  }
-
-  .card-hover {
-    @apply card hover:shadow-card-hover transition-shadow duration-200;
+  .btn-secondary:hover {
+    background-color: var(--gray-100);
   }
 
   .input-field {
-    @apply block w-full px-3 py-2 text-sm border border-navy-200 dark:border-[#334155] rounded-lg bg-white dark:bg-[#0F172A] text-navy-900 dark:text-[#F1F5F9] placeholder-navy-400 dark:placeholder-navy-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors duration-200;
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+    color: var(--text);
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 0.5rem;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    height: 44px;
   }
 
-  .input-error {
-    @apply border-danger-500 focus:ring-danger-500 focus:border-danger-500;
+  .input-field::placeholder {
+    color: var(--gray-500);
   }
 
-  .label {
-    @apply block text-sm font-medium text-navy-700 dark:text-navy-300 mb-1;
+  .input-field:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   }
 
-  .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  .card {
+    background-color: var(--card-bg);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border);
+  }
+
+  .metric-card {
+    background-color: var(--card-bg);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
   .badge-success {
-    @apply badge bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-400;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #065F46;
+    background-color: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    border-radius: 9999px;
   }
 
   .badge-warning {
-    @apply badge bg-warning-50 text-warning-700 dark:bg-warning-500/10 dark:text-warning-400;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #92400E;
+    background-color: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-radius: 9999px;
   }
 
   .badge-danger {
-    @apply badge bg-danger-50 text-danger-700 dark:bg-danger-500/10 dark:text-danger-400;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #991B1B;
+    background-color: #FEF2F2;
+    border: 1px solid #FECACA;
+    border-radius: 9999px;
   }
 
-  .badge-primary {
-    @apply badge bg-primary-50 text-primary-700 dark:bg-primary-500/10 dark:text-primary-400;
+  .badge-info {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #1E40AF;
+    background-color: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    border-radius: 9999px;
+  }
+
+  .table-container {
+    background-color: var(--card-bg);
+    border-radius: 0.75rem;
+    border: 1px solid var(--border);
+    overflow: hidden;
   }
 
   .table-header {
-    @apply px-4 py-3 text-left text-xs font-semibold text-navy-500 dark:text-navy-300 uppercase tracking-wider bg-navy-50 dark:bg-[#0F172A];
+    background-color: var(--gray-100);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gray-500);
   }
 
-  .table-cell {
-    @apply px-4 py-3 text-sm text-navy-700 dark:text-[#F1F5F9] whitespace-nowrap;
+  .table-row {
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.15s ease;
+  }
+
+  .table-row:hover {
+    background-color: var(--gray-100);
   }
 
   .sidebar-link {
-    @apply flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-200;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.75rem;
+    border-radius: 0.5rem;
+    color: #FFFFFF;
+    font-size: 0.875rem;
+    transition: background-color 0.15s ease;
+    border-left: 3px solid transparent;
   }
 
-  .sidebar-link-active {
-    @apply sidebar-link bg-primary-500/10 text-primary-400;
+  .sidebar-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
   }
 
-  .sidebar-link-inactive {
-    @apply sidebar-link text-navy-300 hover:text-white hover:bg-white/5;
-  }
-
-  .stat-card {
-    @apply card flex flex-col gap-2;
-  }
-
-  .page-title {
-    @apply text-2xl font-bold text-navy-900 dark:text-[#F1F5F9];
-  }
-
-  .section-title {
-    @apply text-lg font-semibold text-navy-800 dark:text-[#F1F5F9];
+  .sidebar-link.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left-color: #3B82F6;
   }
 }
 
-@layer utilities {
-  .scrollbar-thin {
-    scrollbar-width: thin;
-    scrollbar-color: theme('colors.navy.300') transparent;
-  }
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
 
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background: transparent;
-  }
+::-webkit-scrollbar-thumb {
+  background-color: var(--gray-200);
+  border-radius: 3px;
+}
 
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: theme('colors.navy.300');
-    border-radius: 3px;
-  }
-
-  .animate-in {
-    animation: fadeIn 0.2s ease-in-out;
-  }
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--gray-500);
 }

@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import DashboardLayout from '@/layouts/DashboardLayout';
-import AuthLayout from '@/layouts/AuthLayout';
 import { useAuthStore } from '@/store/authStore';
 
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
@@ -43,9 +42,7 @@ export default function AppRoutes() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<LoginPage />} />
-        </Route>
+        <Route path="/login" element={<LoginPage />} />
 
         <Route
           element={
