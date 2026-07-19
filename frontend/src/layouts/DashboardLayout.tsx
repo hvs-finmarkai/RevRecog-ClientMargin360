@@ -12,6 +12,7 @@ import {
   LogOut,
   Sun,
   Moon,
+  Zap,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { useAppStore } from '@/store/appStore';
@@ -61,16 +62,16 @@ export default function DashboardLayout() {
         }`}
         style={{ width: 260, backgroundColor: '#0F172A' }}
       >
-        <div className="flex items-center gap-3 px-5 py-5">
+        <div className="flex items-center gap-2 px-4 h-16 border-b border-white/10">
           <div
-            className="flex items-center justify-center rounded-lg text-white font-bold text-lg"
-            style={{ width: 40, height: 40, backgroundColor: '#4F46E5' }}
+            className="flex items-center justify-center rounded-lg"
+            style={{ width: 36, height: 36, backgroundColor: '#4F46E5' }}
           >
-            R
+            <Zap size={20} className="text-white" />
           </div>
           <div>
-            <div className="text-white font-bold text-base">RevRecog AI</div>
-            <div className="text-gray-400 text-xs">by Finmark.ai</div>
+            <h1 className="text-sm font-bold text-white">Finmark.ai</h1>
+            <p className="text-xs text-slate-400">P&L AutoTrack Suite</p>
           </div>
         </div>
 
