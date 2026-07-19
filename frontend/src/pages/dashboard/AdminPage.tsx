@@ -44,7 +44,7 @@ export default function AdminPage() {
     queryKey: ['admin-users'],
     queryFn: async () => {
       const res = await apiClient.get('/users/users/');
-      return res.data?.data || res.data || [];
+      return res.data?.results || res.data?.data || res.data || [];
     },
   });
 
@@ -155,22 +155,22 @@ export default function AdminPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-navy-100 dark:divide-[#334155]">
-                {users.map((u) => (
+                {users.map((u: any) => (
                   <tr key={u.id} className="hover:bg-navy-50 dark:hover:bg-white/5">
                     <td className="table-cell dark:text-[#F1F5F9]">{u.email}</td>
-                    <td className="table-cell dark:text-[#F1F5F9]">{u.name}</td>
+                    <td className="table-cell dark:text-[#F1F5F9]">{u.full_name || `${u.first_name} ${u.last_name}`}</td>
                     <td className="table-cell">
-                      <span className="badge-primary">{u.role.replace('_', ' ')}</span>
+                      <span className="badge-primary">{u.role_detail?.name || u.role || (u.is_staff ? 'admin' : 'user')}</span>
                     </td>
                     <td className="table-cell">
-                      {u.isActive ? (
+                      {u.is_active ? (
                         <span className="badge-success">Active</span>
                       ) : (
                         <span className="badge-danger">Inactive</span>
                       )}
                     </td>
                     <td className="table-cell dark:text-navy-300">
-                      {u.lastLogin ? new Date(u.lastLogin).toLocaleDateString() : '—'}
+                      {u.last_login ? new Date(u.last_login).toLocaleDateString() : '—'}
                     </td>
                     <td className="table-cell">
                       {deleteConfirmId === u.id ? (
