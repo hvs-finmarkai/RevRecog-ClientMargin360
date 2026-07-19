@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { lazy, Suspense, useState, useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import DashboardLayout from '@/layouts/DashboardLayout';
-import { useAuthStore } from '@/store/authStore';
 
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
 const OverviewPage = lazy(() => import('@/pages/dashboard/OverviewPage'));
@@ -29,22 +28,30 @@ function PageLoader() {
 }
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, tokens } = useAuthStore();
-  const [hydrated, setHydrated] = useState(false);
+  const storedTokens = localStorage.getItem('auth-tokens');
+  const storedAuth = localStorage.getItem('auth-storage');
 
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
+  let hasAuth = false;
 
-  if (!hydrated) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="w-8 h-8 border-4 border-primary-200 border-t-primary-500 rounded-full animate-spin" />
-      </div>
-    );
+  if (storedTokens) {
+    try {
+      const tokens = JSON.parse(storedTokens);
+      hasAuth = !!tokens.accessToken;
+    } catch {
+      hasAuth = false;
+    }
   }
 
-  if (!isAuthenticated && !tokens) {
+  if (!hasAuth && storedAuth) {
+    try {
+      const parsed = JSON.parse(storedAuth);
+      hasAuth = parsed.state?.isAuthenticated === true;
+    } catch {
+      hasAuth = false;
+    }
+  }
+
+  if (!hasAuth) {
     return <Navigate to="/login" replace />;
   }
 

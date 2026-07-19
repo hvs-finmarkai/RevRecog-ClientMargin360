@@ -15,11 +15,17 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { login, isLoading, isAuthenticated, tokens } = useAuthStore();
+  const { login, isLoading } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
 
-  if (isAuthenticated || tokens) {
-    return <Navigate to="/dashboard" replace />;
+  const storedTokens = localStorage.getItem('auth-tokens');
+  if (storedTokens) {
+    try {
+      const tokens = JSON.parse(storedTokens);
+      if (tokens.accessToken) {
+        return <Navigate to="/dashboard" replace />;
+      }
+    } catch {}
   }
 
   const {
