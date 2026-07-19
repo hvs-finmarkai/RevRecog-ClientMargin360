@@ -73,7 +73,7 @@ export default function LoginPage() {
           <p className="text-slate-300 text-lg mb-6">
             Automated Revenue Recognition, Billing & Real-Time Client Profitability
           </p>
-          <div className="space-y-3 text-left">
+          <div className="space-y-3">
             {[
               "AI-Powered Revenue Recognition",
               "Real-time Client Profitability",
@@ -81,7 +81,7 @@ export default function LoginPage() {
               "Leakage Detection",
               "Multi-dimensional Dashboards",
             ].map((feature) => (
-              <div key={feature} className="flex items-center gap-3 text-slate-300">
+              <div key={feature} className="flex items-center justify-center gap-3 text-slate-300">
                 <div className="h-2 w-2 rounded-full bg-indigo-500" />
                 <span className="text-sm">{feature}</span>
               </div>
