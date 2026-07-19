@@ -62,7 +62,20 @@ export default function AdminPage() {
       loadUsers();
       toast.success('User created successfully');
     } catch (err: any) {
-      const detail = err.response?.data?.email?.[0] || err.response?.data?.detail || 'Failed to create user';
+      const errorData = err.response?.data;
+      let detail = '';
+      if (errorData) {
+        if (typeof errorData === 'string') {
+          detail = errorData;
+        } else {
+          const messages = Object.entries(errorData).map(([key, val]: [string, any]) => {
+            const msg = Array.isArray(val) ? val.join(', ') : val;
+            return `${key}: ${msg}`;
+          });
+          detail = messages.join(' | ');
+        }
+      }
+      if (!detail) detail = 'Failed to create user';
       setError(detail);
       toast.error(detail);
     }
