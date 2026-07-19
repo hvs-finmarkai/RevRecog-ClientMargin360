@@ -59,12 +59,12 @@ export default function DashboardLayout() {
         className={`fixed lg:static inset-y-0 left-0 z-50 flex flex-col transition-transform duration-300 lg:translate-x-0 ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
-        style={{ width: 260, backgroundColor: '#1F3864' }}
+        style={{ width: 260, backgroundColor: '#0F172A' }}
       >
         <div className="flex items-center gap-3 px-5 py-5">
           <div
             className="flex items-center justify-center rounded-lg text-white font-bold text-lg"
-            style={{ width: 40, height: 40, backgroundColor: '#3B82F6' }}
+            style={{ width: 40, height: 40, backgroundColor: '#4F46E5' }}
           >
             R
           </div>
@@ -84,7 +84,7 @@ export default function DashboardLayout() {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
                   isActive
-                    ? 'text-white border-l-[3px] border-[#3B82F6]'
+                    ? 'text-white border-l-[3px] border-[#4F46E5]'
                     : 'text-white border-l-[3px] border-transparent'
                 }`
               }
@@ -113,7 +113,7 @@ export default function DashboardLayout() {
           <div className="flex items-center gap-3">
             <div
               className="flex items-center justify-center rounded-full text-white text-sm font-semibold"
-              style={{ width: 36, height: 36, backgroundColor: '#3B82F6' }}
+              style={{ width: 36, height: 36, backgroundColor: '#4F46E5' }}
             >
               {userInitials}
             </div>
