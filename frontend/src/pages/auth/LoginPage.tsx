@@ -18,16 +18,6 @@ export default function LoginPage() {
   const { login, isLoading } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
 
-  const storedTokens = localStorage.getItem('auth-tokens');
-  if (storedTokens) {
-    try {
-      const tokens = JSON.parse(storedTokens);
-      if (tokens.accessToken) {
-        return <Navigate to="/dashboard" replace />;
-      }
-    } catch {}
-  }
-
   const {
     register,
     handleSubmit,
@@ -39,6 +29,16 @@ export default function LoginPage() {
       password: '',
     },
   });
+
+  const storedTokens = localStorage.getItem('auth-tokens');
+  if (storedTokens) {
+    try {
+      const tokens = JSON.parse(storedTokens);
+      if (tokens.accessToken) {
+        return <Navigate to="/dashboard" replace />;
+      }
+    } catch {}
+  }
 
   const onSubmit = async (data: LoginFormData) => {
     try {
