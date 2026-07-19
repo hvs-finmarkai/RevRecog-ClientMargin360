@@ -135,7 +135,7 @@ export default function DashboardLayout() {
       <div className="flex-1 flex flex-col overflow-hidden">
         <header
           className="flex items-center justify-between px-6 py-3 shrink-0"
-          style={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #E2E8F0' }}
+          style={{ backgroundColor: 'var(--card-bg)', borderBottom: '1px solid var(--gray-200)' }}
         >
           <div className="flex items-center gap-3">
             <button
@@ -146,11 +146,11 @@ export default function DashboardLayout() {
                 <path d="M3 12h18M3 6h18M3 18h18" />
               </svg>
             </button>
-            <h1 className="text-lg font-semibold text-gray-900 dark:text-white">{currentPageTitle}</h1>
+            <h1 className="text-lg font-semibold" style={{ color: 'var(--text)' }}>{currentPageTitle}</h1>
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="hidden md:inline text-xs text-gray-500">
+            <span className="hidden md:inline text-xs" style={{ color: 'var(--gray-500)' }}>
               RevRecog AI + ClientMargin360 • Finmark.ai
             </span>
 
@@ -164,7 +164,8 @@ export default function DashboardLayout() {
 
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              className="p-2 rounded-lg transition-colors"
+              style={{ color: 'var(--gray-500)' }}
             >
               {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
             </button>
