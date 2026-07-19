@@ -173,15 +173,7 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <div className="mt-6 p-4 rounded-lg" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0' }}>
-            <p className="text-xs text-gray-500 font-medium mb-1">Demo Credentials</p>
-            <p className="text-xs text-gray-600">
-              Email: <span className="font-mono">admin@finmark.ai</span>
-            </p>
-            <p className="text-xs text-gray-600">
-              Password: <span className="font-mono">Finmark@2026</span>
-            </p>
-          </div>
+
         </div>
       </div>
     </div>
