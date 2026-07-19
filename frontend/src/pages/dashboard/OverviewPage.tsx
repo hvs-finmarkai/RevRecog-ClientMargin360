@@ -41,7 +41,8 @@ export default function OverviewPage() {
     generated_at: new Date().toISOString(),
   };
 
-  const displayData = data || fallback;
+  const hasRealData = data && (parseFloat(data.total_contract_value) > 0 || data.active_clients > 0);
+  const displayData = hasRealData ? data : fallback;
 
   const metrics = [
     {
