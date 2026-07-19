@@ -3,7 +3,7 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, TrendingUp } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 
 const loginSchema = z.object({
@@ -52,22 +52,45 @@ export default function LoginPage() {
     <div className="flex h-screen">
       <div
         className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center px-12"
-        style={{ backgroundColor: '#1F3864' }}
+        style={{ backgroundColor: '#0F172A' }}
       >
         <div className="max-w-md text-center">
-          <div
-            className="mx-auto flex items-center justify-center rounded-2xl text-white font-bold text-5xl mb-8"
-            style={{ width: 96, height: 96, backgroundColor: '#3B82F6' }}
-          >
-            R
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <div
+              className="flex items-center justify-center rounded-xl"
+              style={{ width: 48, height: 48, backgroundColor: '#4F46E5' }}
+            >
+              <TrendingUp size={28} className="text-white" />
+            </div>
+            <div className="text-left">
+              <h1 className="text-2xl font-bold text-white">Finmark.ai</h1>
+              <p className="text-sm text-slate-400">RevRecog AI</p>
+            </div>
           </div>
-          <h1 className="text-white text-3xl font-bold mb-4">
+          <h2 className="text-3xl font-bold text-white mb-4">
             RevRecog AI + ClientMargin360
-          </h1>
-          <p className="text-blue-200 text-lg mb-6">
+          </h2>
+          <p className="text-slate-300 text-lg mb-6">
             Automated Revenue Recognition, Billing & Real-Time Client Profitability
           </p>
-          <p className="text-gray-400 text-sm">by Finmark.ai</p>
+          <div className="space-y-3 text-left">
+            {[
+              "AI-Powered Revenue Recognition",
+              "Real-time Client Profitability",
+              "Automated Billing & Invoicing",
+              "Leakage Detection",
+              "Multi-dimensional Dashboards",
+            ].map((feature) => (
+              <div key={feature} className="flex items-center gap-3 text-slate-300">
+                <div className="h-2 w-2 rounded-full bg-indigo-500" />
+                <span className="text-sm">{feature}</span>
+              </div>
+            ))}
+          </div>
+          <div className="mt-12 pt-8 border-t border-white/10">
+            <p className="text-xs text-slate-500">Finmark.ai</p>
+            <p className="text-xs text-slate-600">© 2025 All rights reserved</p>
+          </div>
         </div>
       </div>
 
@@ -75,14 +98,14 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           <div className="lg:hidden flex items-center gap-3 mb-8 justify-center">
             <div
-              className="flex items-center justify-center rounded-lg text-white font-bold text-xl"
-              style={{ width: 44, height: 44, backgroundColor: '#3B82F6' }}
+              className="flex items-center justify-center rounded-xl"
+              style={{ width: 44, height: 44, backgroundColor: '#4F46E5' }}
             >
-              R
+              <TrendingUp size={24} className="text-white" />
             </div>
             <div>
-              <div className="font-bold text-lg" style={{ color: '#1F3864' }}>RevRecog AI</div>
-              <div className="text-gray-400 text-xs">by Finmark.ai</div>
+              <div className="font-bold text-lg" style={{ color: '#0F172A' }}>Finmark.ai</div>
+              <div className="text-gray-400 text-xs">RevRecog AI</div>
             </div>
           </div>
 

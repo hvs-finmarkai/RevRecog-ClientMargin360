@@ -12,7 +12,6 @@ import {
   LogOut,
   Sun,
   Moon,
-  Zap,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
 import { useAppStore } from '@/store/appStore';
@@ -57,21 +56,21 @@ export default function DashboardLayout() {
       )}
 
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 flex flex-col transition-transform duration-300 lg:translate-x-0 ${
+        className={`fixed lg:static inset-y-0 left-0 z-50 flex flex-col transition-all duration-300 lg:translate-x-0 ${
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
-        style={{ width: 260, backgroundColor: '#0F172A' }}
+        style={{ width: 260, backgroundColor: 'var(--sidebar-bg)', borderRight: '1px solid var(--sidebar-border)' }}
       >
-        <div className="flex items-center gap-2 px-4 h-16 border-b border-white/10">
+        <div className="flex items-center gap-2 px-4 h-16" style={{ borderBottom: '1px solid var(--sidebar-border)' }}>
           <div
-            className="flex items-center justify-center rounded-lg"
+            className="flex items-center justify-center rounded-xl"
             style={{ width: 36, height: 36, backgroundColor: '#4F46E5' }}
           >
-            <Zap size={20} className="text-white" />
+            <TrendingUp size={20} className="text-white" />
           </div>
           <div>
-            <h1 className="text-sm font-bold text-white">Finmark.ai</h1>
-            <p className="text-xs text-slate-400">P&L AutoTrack Suite</p>
+            <h1 className="text-sm font-bold" style={{ color: 'var(--sidebar-text)' }}>Finmark.ai</h1>
+            <p className="text-xs" style={{ color: 'var(--sidebar-text-secondary)' }}>RevRecog AI</p>
           </div>
         </div>
 
@@ -85,16 +84,17 @@ export default function DashboardLayout() {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
                   isActive
-                    ? 'text-white border-l-[3px] border-[#4F46E5]'
-                    : 'text-white border-l-[3px] border-transparent'
+                    ? 'border-l-[3px] border-[#4F46E5]'
+                    : 'border-l-[3px] border-transparent'
                 }`
               }
               style={({ isActive }) => ({
-                backgroundColor: isActive ? 'rgba(255,255,255,0.1)' : undefined,
+                backgroundColor: isActive ? 'var(--sidebar-active)' : undefined,
+                color: 'var(--sidebar-text)',
               })}
               onMouseEnter={(e) => {
                 if (!e.currentTarget.classList.contains('active')) {
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                  e.currentTarget.style.backgroundColor = 'var(--sidebar-hover)';
                 }
               }}
               onMouseLeave={(e) => {
@@ -110,7 +110,7 @@ export default function DashboardLayout() {
           ))}
         </nav>
 
-        <div className="px-4 py-4 border-t border-white/10">
+        <div className="px-4 py-4" style={{ borderTop: '1px solid var(--sidebar-border)' }}>
           <div className="flex items-center gap-3">
             <div
               className="flex items-center justify-center rounded-full text-white text-sm font-semibold"
@@ -119,12 +119,13 @@ export default function DashboardLayout() {
               {userInitials}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-white text-sm font-medium truncate">{userName}</div>
-              <div className="text-gray-400 text-xs truncate">Finance Team</div>
+              <div className="text-sm font-medium truncate" style={{ color: 'var(--sidebar-text)' }}>{userName}</div>
+              <div className="text-xs truncate" style={{ color: 'var(--sidebar-text-secondary)' }}>Finance Team</div>
             </div>
             <button
               onClick={handleLogout}
-              className="text-gray-400 hover:text-white transition-colors"
+              className="transition-colors"
+              style={{ color: 'var(--sidebar-text-secondary)' }}
               title="Logout"
             >
               <LogOut size={18} />

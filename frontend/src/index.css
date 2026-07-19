@@ -8,7 +8,12 @@
   --success: #10B981;
   --warning: #F59E0B;
   --danger: #EF4444;
-  --sidebar-bg: #0F172A;
+  --sidebar-bg: #FFFFFF;
+  --sidebar-text: #1E293B;
+  --sidebar-text-secondary: #64748B;
+  --sidebar-border: #E2E8F0;
+  --sidebar-hover: rgba(0, 0, 0, 0.05);
+  --sidebar-active: rgba(79, 70, 229, 0.1);
   --bg: #F8FAFC;
   --card-bg: #FFFFFF;
   --text: #1E293B;
@@ -22,6 +27,12 @@
 }
 
 .dark {
+  --sidebar-bg: #0F172A;
+  --sidebar-text: #FFFFFF;
+  --sidebar-text-secondary: #94A3B8;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-hover: rgba(255, 255, 255, 0.1);
+  --sidebar-active: rgba(255, 255, 255, 0.1);
   --bg: #0F172A;
   --card-bg: #1E293B;
   --text: #F1F5F9;
@@ -300,19 +311,19 @@ body {
     gap: 0.75rem;
     padding: 0.625rem 0.75rem;
     border-radius: 0.5rem;
-    color: #FFFFFF;
+    color: var(--sidebar-text);
     font-size: 0.875rem;
-    transition: background-color 0.15s ease;
+    transition: background-color 0.15s ease, color 0.15s ease;
     border-left: 3px solid transparent;
   }
 
   .sidebar-link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--sidebar-hover);
   }
 
   .sidebar-link.active {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-left-color: #3B82F6;
+    background-color: var(--sidebar-active);
+    border-left-color: var(--primary);
   }
 }
 
