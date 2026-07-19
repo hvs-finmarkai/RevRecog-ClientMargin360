@@ -14,7 +14,11 @@ const createUserSchema = z.object({
   first_name: z.string().min(1),
   last_name: z.string().min(1),
   password: z.string().min(8),
+  password_confirm: z.string().min(8),
   role: z.enum(['admin', 'finance_manager', 'analyst', 'viewer']),
+}).refine((data) => data.password === data.password_confirm, {
+  message: "Passwords don't match",
+  path: ["password_confirm"],
 });
 
 type CreateUserForm = z.infer<typeof createUserSchema>;
@@ -45,7 +49,17 @@ export default function AdminPage() {
   });
 
   const createMutation = useMutation({
-    mutationFn: (data: CreateUserForm) => apiClient.post('/users/users/', data),
+    mutationFn: (data: CreateUserForm) => {
+      const payload = {
+        email: data.email,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        password: data.password,
+        password_confirm: data.password_confirm,
+        is_active: true,
+      };
+      return apiClient.post('/users/users/', payload);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-users'] });
       setShowCreateModal(false);
@@ -292,6 +306,17 @@ export default function AdminPage() {
                   placeholder="Minimum 8 characters"
                 />
                 {errors.password && <p className="text-xs text-danger-500 mt-1">{errors.password.message}</p>}
+              </div>
+
+              <div>
+                <label className="label dark:text-navy-300">Confirm Password</label>
+                <input
+                  type="password"
+                  {...register('password_confirm')}
+                  className={`input-field dark:bg-[#0F172A] dark:border-[#334155] dark:text-[#F1F5F9] ${errors.password_confirm ? 'input-error' : ''}`}
+                  placeholder="Repeat password"
+                />
+                {errors.password_confirm && <p className="text-xs text-danger-500 mt-1">{errors.password_confirm.message}</p>}
               </div>
 
               <div>
