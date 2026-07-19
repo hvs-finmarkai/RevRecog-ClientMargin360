@@ -38,7 +38,7 @@ export default function LeakageDetectionPage() {
   });
 
   const fallbackLeakages: LeakageDetection[] = [
-    { id: '1', detection_type: 'unbilled_hours', client_name: 'Denave India', amount: '1240000', severity: 'critical', status: 'open', detected_at: '2024-07-15T10:00:00Z', description: '42 hours unbilled from last sprint' },
+    { id: '1', detection_type: 'unbilled_hours', client_name: 'Finmark.ai', amount: '1240000', severity: 'critical', status: 'open', detected_at: '2024-07-15T10:00:00Z', description: '42 hours unbilled from last sprint' },
     { id: '2', detection_type: 'missed_escalation', client_name: 'HCL Tech', amount: '1870000', severity: 'critical', status: 'open', detected_at: '2024-07-14T08:30:00Z', description: 'Rate card not updated for 18 months' },
     { id: '3', detection_type: 'scope_creep', client_name: 'Tata Motors', amount: '2410000', severity: 'critical', status: 'open', detected_at: '2024-07-13T14:00:00Z', description: '15% scope expansion without pricing adjustment' },
     { id: '4', detection_type: 'undercharging', client_name: 'Wipro Analytics', amount: '830000', severity: 'high', status: 'acknowledged', detected_at: '2024-07-12T09:15:00Z', description: 'Billing below market rate by 12%' },

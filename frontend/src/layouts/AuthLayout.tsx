@@ -56,7 +56,7 @@ export default function AuthLayout() {
 
           {/* Footer */}
           <div className="text-navy-400 text-sm">
-            <p>© 2024 Finmark.ai — Built for Denave PnL Management</p>
+            <p>© 2024 Finmark.ai — Built for P&L Management</p>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 # System Architecture Document
 ## RevRecog AI + ClientMargin360
-### Finmark.ai | Denave India Pvt. Ltd.
+### Finmark.ai
 
 | Field | Value |
 |-------|-------|
@@ -608,7 +608,7 @@ Stickiness: Disabled (stateless services)
   "payload": {
     "sub": "usr_a1b2c3d4",
     "org_id": "org_x1y2z3",
-    "email": "user@denave.com",
+    "email": "user@finmark.ai",
     "name": "Priya Verma",
     "roles": ["finance_manager"],
     "permissions": ["invoice.create", "invoice.approve", "contract.read"],

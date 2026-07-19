@@ -13,7 +13,7 @@
 
 **RevRecog AI** is an intelligent revenue recognition engine that automates ASC 606 / IFRS 15 compliance for B2B service companies. **ClientMargin360** provides real-time client profitability analytics, margin tracking, and leakage detection powered by AI.
 
-Built for Denave's P&L optimization workflow as part of the Finmark.ai platform.
+Built for P&L optimization workflow as part of the Finmark.ai platform.
 
 ---
 

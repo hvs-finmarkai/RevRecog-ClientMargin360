@@ -219,11 +219,11 @@ export default function AdminPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="label dark:text-navy-300">Organization Name</label>
-            <input type="text" defaultValue="Denave Ltd." className="input-field dark:bg-[#0F172A] dark:border-[#334155] dark:text-[#F1F5F9]" readOnly />
+            <input type="text" defaultValue="Finmark.ai" className="input-field dark:bg-[#0F172A] dark:border-[#334155] dark:text-[#F1F5F9]" readOnly />
           </div>
           <div>
             <label className="label dark:text-navy-300">Primary Domain</label>
-            <input type="text" defaultValue="denave.com" className="input-field dark:bg-[#0F172A] dark:border-[#334155] dark:text-[#F1F5F9]" readOnly />
+            <input type="text" defaultValue="finmark.ai" className="input-field dark:bg-[#0F172A] dark:border-[#334155] dark:text-[#F1F5F9]" readOnly />
           </div>
           <div>
             <label className="label dark:text-navy-300">Default Currency</label>

@@ -1,6 +1,6 @@
 # API Documentation
 ## RevRecog AI + ClientMargin360
-### Finmark.ai | Denave India Pvt. Ltd.
+### Finmark.ai
 
 | Field | Value |
 |-------|-------|
@@ -114,9 +114,9 @@
 **Request Body:**
 ```json
 {
-  "email": "priya.verma@denave.com",
+  "email": "priya.verma@finmark.ai",
   "password": "SecureP@ss123",
-  "org_slug": "denave"
+  "org_slug": "finmark"
 }
 ```
 
@@ -131,11 +131,11 @@
     "expires_in": 3600,
     "user": {
       "id": "usr_a1b2c3d4",
-      "email": "priya.verma@denave.com",
+      "email": "priya.verma@finmark.ai",
       "name": "Priya Verma",
       "roles": ["finance_manager"],
       "org_id": "org_x1y2z3",
-      "org_name": "Denave India Pvt. Ltd."
+      "org_name": "Finmark.ai"
     }
   }
 }
@@ -154,7 +154,7 @@
 **Request Body:**
 ```json
 {
-  "email": "ankit.patel@denave.com",
+  "email": "ankit.patel@finmark.ai",
   "password": "SecureP@ss456",
   "first_name": "Ankit",
   "last_name": "Patel",
@@ -170,7 +170,7 @@
   "success": true,
   "data": {
     "user_id": "usr_new123",
-    "email": "ankit.patel@denave.com",
+    "email": "ankit.patel@finmark.ai",
     "status": "pending_verification",
     "verification_email_sent": true
   }
@@ -239,7 +239,7 @@
 **Request Body:**
 ```json
 {
-  "email": "priya.verma@denave.com"
+  "email": "priya.verma@finmark.ai"
 }
 ```
 
@@ -1386,7 +1386,7 @@
 {
   "method": "email",
   "recipients": ["finance@reliancejio.com", "rajesh.kumar@reliancejio.com"],
-  "cc": ["priya.verma@denave.com"],
+  "cc": ["priya.verma@finmark.ai"],
   "message": "Please find attached invoice for services rendered in July 2026."
 }
 ```
@@ -2599,7 +2599,7 @@
   "day_of_month": 2,
   "time_of_day": "08:00",
   "format": "pdf",
-  "recipients": ["cfo@denave.com", "finance.head@denave.com"]
+  "recipients": ["cfo@finmark.ai", "finance.head@finmark.ai"]
 }
 ```
 
@@ -2671,7 +2671,7 @@
   "success": true,
   "data": {
     "id": "org_x1y2z3",
-    "name": "Denave India Pvt. Ltd.",
+    "name": "Finmark.ai",
     "plan_tier": "enterprise",
     "gstin": "07AAACN0164C1ZW",
     "financial_year_start": 4,
@@ -2707,7 +2707,7 @@
   "data": [
     {
       "id": "usr_001",
-      "email": "priya.verma@denave.com",
+      "email": "priya.verma@finmark.ai",
       "name": "Priya Verma",
       "roles": ["finance_manager"],
       "status": "active",
@@ -2726,7 +2726,7 @@
 **Request Body:**
 ```json
 {
-  "email": "new.user@denave.com",
+  "email": "new.user@finmark.ai",
   "first_name": "New",
   "last_name": "User",
   "role": "accountant",

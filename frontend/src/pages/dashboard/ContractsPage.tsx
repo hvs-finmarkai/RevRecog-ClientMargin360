@@ -38,7 +38,7 @@ export default function ContractsPage() {
   });
 
   const fallbackContracts: Contract[] = [
-    { id: '1', contract_number: 'CTR-001', client_name: 'Denave India', billing_model: 'T&M', billing_model_display: 'Time & Material', total_value: '245000000', status: 'active', start_date: '2024-01-01', end_date: '2025-12-31' },
+    { id: '1', contract_number: 'CTR-001', client_name: 'Finmark.ai', billing_model: 'T&M', billing_model_display: 'Time & Material', total_value: '245000000', status: 'active', start_date: '2024-01-01', end_date: '2025-12-31' },
     { id: '2', contract_number: 'CTR-002', client_name: 'Infosys BPM', billing_model: 'Milestone', billing_model_display: 'Fixed Milestone', total_value: '182000000', status: 'active', start_date: '2024-03-01', end_date: '2025-09-30' },
     { id: '3', contract_number: 'CTR-003', client_name: 'TCS Digital', billing_model: 'Retainer', billing_model_display: 'Monthly Retainer', total_value: '320000000', status: 'active', start_date: '2024-02-01', end_date: '2026-01-31' },
     { id: '4', contract_number: 'CTR-004', client_name: 'Wipro Analytics', billing_model: 'Performance', billing_model_display: 'Performance-Based', total_value: '158000000', status: 'active', start_date: '2024-04-01', end_date: '2025-03-31' },

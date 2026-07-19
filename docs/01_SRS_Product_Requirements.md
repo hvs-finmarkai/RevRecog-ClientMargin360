@@ -1,6 +1,6 @@
 # Software Requirements Specification (SRS)
 ## RevRecog AI + ClientMargin360
-### Finmark.ai | Denave India Pvt. Ltd.
+### Finmark.ai
 
 | Field | Value |
 |-------|-------|
@@ -31,7 +31,7 @@
 
 ### 1.1 Purpose
 
-RevRecog AI + ClientMargin360 is an AI-powered enterprise platform that automates revenue recognition (ASC 606 / Ind AS 115 compliant), eliminates billing leakage, and provides real-time client profitability analytics for professional services organizations. Built specifically for Denave India Pvt. Ltd. as the anchor customer, the platform addresses chronic revenue leakage of 3-5% annually (Rs. 9-15 Cr) through intelligent automation of the entire billing-to-recognition lifecycle.
+RevRecog AI + ClientMargin360 is an AI-powered enterprise platform that automates revenue recognition (ASC 606 / Ind AS 115 compliant), eliminates billing leakage, and provides real-time client profitability analytics for professional services organizations. Built specifically for Finmark.ai as the anchor customer, the platform addresses chronic revenue leakage of 3-5% annually (Rs. 9-15 Cr) through intelligent automation of the entire billing-to-recognition lifecycle.
 
 ### 1.2 Scope
 
@@ -127,7 +127,7 @@ Professional services companies with 50+ active client engagements, multiple bil
 | Attribute | Detail |
 |-----------|--------|
 | **Name** | Rajesh Sharma |
-| **Role** | CFO, Denave India |
+| **Role** | CFO, Finmark.ai |
 | **Goals** | Maximize revenue realization, ensure compliance, strategic margin decisions |
 | **Pain Points** | Lack of real-time visibility, manual compliance processes, surprise leakage discoveries |
 | **Key Features** | Executive dashboard, margin alerts, compliance reports, forecasts |

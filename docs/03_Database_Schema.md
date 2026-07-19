@@ -1,6 +1,6 @@
 # Database Schema Design
 ## RevRecog AI + ClientMargin360
-### Finmark.ai | Denave India Pvt. Ltd.
+### Finmark.ai
 
 | Field | Value |
 |-------|-------|

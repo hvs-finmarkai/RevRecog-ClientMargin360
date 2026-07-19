@@ -19,10 +19,10 @@ from apps.notifications.models import Notification
 
 
 class Command(BaseCommand):
-    help = "Seed demo data for Denave India RevRecog AI + ClientMargin360"
+    help = "Seed demo data for Finmark.ai RevRecog AI + ClientMargin360"
 
     def handle(self, *args, **options):
-        if Organization.objects.filter(name="Denave India Pvt Ltd").exists():
+        if Organization.objects.filter(name="Finmark.ai").exists():
             self.stdout.write(self.style.WARNING("Demo data already exists. Skipping."))
             return
 
@@ -49,8 +49,8 @@ class Command(BaseCommand):
     def _create_organization(self):
         self.stdout.write("Creating organization...")
         org = Organization.objects.create(
-            name="Denave India Pvt Ltd",
-            domain="denave.com",
+            name="Finmark.ai",
+            domain="finmark.ai",
             subscription_plan="enterprise",
             is_active=True,
             address="Plot 58, Sector 44, Gurgaon, Haryana 122003",
@@ -84,8 +84,8 @@ class Command(BaseCommand):
         self.stdout.write("Creating users...")
         users_data = [
             ("admin@finmark.ai", "Rajesh", "Kumar", "Admin", True),
-            ("finance@denave.com", "Priya", "Sharma", "Finance Manager", False),
-            ("ops@denave.com", "Amit", "Patel", "Operations Head", False),
+            ("finance@finmark.ai", "Priya", "Sharma", "Finance Manager", False),
+            ("ops@finmark.ai", "Amit", "Patel", "Operations Head", False),
         ]
         users = []
         for email, first, last, role_name, is_staff in users_data:
