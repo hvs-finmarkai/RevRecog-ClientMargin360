@@ -58,11 +58,10 @@ class UserViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(
             organization=self.request.user.organization,
-            created_by=self.request.user,
         )
 
     def perform_update(self, serializer):
-        serializer.save(updated_by=self.request.user)
+        serializer.save()
 
     def perform_destroy(self, instance):
         instance.soft_delete()
