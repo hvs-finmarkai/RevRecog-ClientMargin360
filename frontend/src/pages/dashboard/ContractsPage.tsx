@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import { useAppStore } from '@/store/appStore';
-import { formatCurrency, formatStatus, getStatusColor } from '@/lib/utils';
+import { formatCurrency, formatStatus } from '@/lib/utils';
 import apiClient from '@/lib/axios';
 
 interface Contract {
@@ -83,7 +83,10 @@ export default function ContractsPage() {
                   <td className="table-cell">{c.billing_model_display || formatStatus(c.billing_model)}</td>
                   <td className="table-cell font-medium">{formatCurrency(parseFloat(c.total_value))}</td>
                   <td className="table-cell">
-                    <span className={getStatusColor(c.status)}>{formatStatus(c.status)}</span>
+                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium ${c.status === 'active' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : c.status === 'at_risk' ? 'bg-red-50 text-red-700 border border-red-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${c.status === 'active' ? 'bg-emerald-500' : c.status === 'at_risk' ? 'bg-red-500' : 'bg-amber-500'}`}></span>
+                      {formatStatus(c.status)}
+                    </span>
                   </td>
                 </tr>
               ))}
