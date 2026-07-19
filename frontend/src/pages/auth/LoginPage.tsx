@@ -15,10 +15,10 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { login, isLoading, isAuthenticated } = useAuthStore();
+  const { login, isLoading, isAuthenticated, tokens } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
 
-  if (isAuthenticated) {
+  if (isAuthenticated || tokens) {
     return <Navigate to="/dashboard" replace />;
   }
 
